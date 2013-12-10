@@ -1,1 +1,16 @@
 <p>List your sales here</p>
+<% @sale_per_person.each do |sale| %>
+  <% @employees.each do |employee| %>  
+      <% if employee.last_name == sale["last_name"] %>
+        <% if employee.role == 'commission sales person' %>
+          Name = <%= employee.first_name %> <%= employee.last_name %><br/>
+          <%= "Sales = " + sale["gross_sale_value"] if employee.last_name != "Bobby" %>
+          <span style="background-color: #FFFF00"><%= "Sales = " + sale["gross_sale_value"] if employee.last_name == "Bobby" %><br/></span>
+          Commission = $<%= "%.2f" % (employee.commission.to_f * sale["gross_sale_value"].to_f) %><br/><br/>
+        <% else %>
+          Name = <%= employee.first_name %> <%= employee.last_name %><br/>
+          Sales = $<%= "%.2f" % sale["gross_sale_value"] %><br/><br/>
+        <% end %>
+      <% end %>
+  <% end %>
+<% end %>
